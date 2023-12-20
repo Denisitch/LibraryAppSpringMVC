@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--      xmlns:th="http://thymeleaf.org"-->
+<head>
+    <meta charset="UTF-8">
+    <title>Страница со списком всех людей</title>
+</head>
+<body>
+<div th:each="person : ${people}">
+    <h2 th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}">user</h2>
+</div>
+<br>
+<hr>
+</body>
+</html>
