@@ -5,9 +5,9 @@ import java.util.Map;
 public class Person {
     private int id;
     private String fullName;
-    private String yearOfBirth;
+    private int yearOfBirth;
 
-    public Person(int id, String fullName, String yearOfBirth) {
+    public Person(int id, String fullName, int yearOfBirth) {
         this.id = id;
         this.fullName = fullName;
         this.yearOfBirth = yearOfBirth;
@@ -32,11 +32,11 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public String getYearOfBirth() {
+    public int getYearOfBirth() {
         return yearOfBirth;
     }
 
-    public void setYearOfBirth(String yearOfBirth) {
+    public void setYearOfBirth(int yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
     }
 }
