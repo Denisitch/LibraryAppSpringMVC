@@ -32,4 +32,11 @@ public class PersonDAO {
         ).stream().findAny().orElse(null);
     }
 
+    public void save(Person person) {
+        jdbcTemplate.update(
+                "INSERT INTO Person(fullname, yearofbirth) VALUES(?, ?)",
+                person.getFullName(),
+                person.getYearOfBirth()
+        );
+    }
 }
