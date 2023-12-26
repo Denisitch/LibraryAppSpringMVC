@@ -1,7 +1,6 @@
 package com.denisitch.dao;
 
 import com.denisitch.models.Book;
-import com.denisitch.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,11 +17,18 @@ public class BooksDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
     public List<Book> index() {
         return jdbcTemplate.query(
                 "SELECT * FROM Book",
                 new BeanPropertyRowMapper<>(Book.class)
         );
+    }
+
+    public Book show(int id) {
+        return jdbcTemplate.query(
+                "SELECT * FROM Book WHERE id=?",
+                new BeanPropertyRowMapper<>(Book.class),
+                id
+        ).stream().findAny().orElse(null);
     }
 }
