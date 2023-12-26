@@ -38,11 +38,26 @@ public class BooksController {
     }
 
     @PostMapping()
-    public String create(
-            @ModelAttribute("book") Book book,
+    public String create(@ModelAttribute("book") Book book) {
+        booksDAO.save(book);
+        return "redirect:/books";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(
+            @PathVariable("id") int id,
             Model model
     ) {
-        booksDAO.save(book);
+        model.addAttribute("book", booksDAO.show(id));
+        return "books/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(
+            @ModelAttribute("book") Book book,
+            @PathVariable("id") int id
+    ) {
+        booksDAO.update(id, book);
         return "redirect:/books";
     }
 }
