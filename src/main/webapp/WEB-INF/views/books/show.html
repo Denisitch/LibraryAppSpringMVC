@@ -12,5 +12,9 @@
         <input type="submit" value="Редактировать"/>
     </form>
     <br><br>
+    <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+        <input type="submit" value="Удалить"/>
+    </form>
+    <br><br>
 </body>
 </html>
