@@ -31,4 +31,13 @@ public class BooksDAO {
                 id
         ).stream().findAny().orElse(null);
     }
+
+    public void save(Book book) {
+        jdbcTemplate.update(
+                "INSERT INTO Book(title, author, year) VALUES (?, ?, ?)",
+                book.getTitle(),
+                book.getAuthor(),
+                book.getYear()
+        );
+    }
 }
