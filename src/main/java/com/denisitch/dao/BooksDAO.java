@@ -57,4 +57,12 @@ public class BooksDAO {
                 id
         );
     }
+
+    public void addBook(int person_id, int book_id) {
+        jdbcTemplate.update(
+                "UPDATE Book SET person_id=? WHERE id=?",
+                person_id,
+                book_id
+        );
+    }
 }
