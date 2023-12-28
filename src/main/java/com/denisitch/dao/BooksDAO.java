@@ -57,19 +57,4 @@ public class BooksDAO {
                 id
         );
     }
-
-    public void assignBook(int person_id, int book_id) {
-        jdbcTemplate.update(
-                "UPDATE Book SET person_id=? WHERE id=?",
-                person_id,
-                book_id
-        );
-    }
-
-    public void unassignBook(int book_id) {
-        jdbcTemplate.update(
-                "UPDATE Book SET person_id=NULL WHERE id=?",
-                book_id
-        );
-    }
 }
