@@ -29,6 +29,7 @@ public class PeopleController {
             @PathVariable("id") int id
     ) {
         model.addAttribute("person", personDAO.show(id));
+        model.addAttribute("books", personDAO.showBooks(id));
         return "people/show";
     }
 

@@ -8,6 +8,21 @@
     <h2 th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}">user</h2>
     <br><br>
     <hr>
+
+    <div th:if="${books.isEmpty()}">
+        <h2>Человек пока не взял ни одной книги</h2>
+    </div>
+
+    <div th:unless="${books.isEmpty()}">
+        <h2>Книги: </h2>
+        <div th:each="book : ${books}">
+            <a th:href="@{/books/{id}(id=${book.getId()})}"
+               th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">Book</a>
+        </div>
+
+    </div>
+
+    <hr>
     <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
         <input type="submit" value="Редактировать данные"/>
     </form>

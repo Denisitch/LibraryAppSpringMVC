@@ -1,5 +1,6 @@
 package com.denisitch.dao;
 
+import com.denisitch.models.Book;
 import com.denisitch.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -53,6 +54,14 @@ public class PersonDAO {
         jdbcTemplate.update(
                 "DELETE FROM Person WHERE id=?",
                 id
+        );
+    }
+
+    public List<Book> showBooks(int person_id) {
+        return jdbcTemplate.query(
+                "SELECT * FROM book WHERE person_id=?",
+                new BeanPropertyRowMapper<>(Book.class),
+                person_id
         );
     }
 }
