@@ -3,11 +3,13 @@ package com.denisitch.models;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 
 public class Person {
     private int id;
     @NotEmpty(message = "Поле 'ФИО' не должно быть пустым")
+    @Size(min = 7, max = 100, message = "ФИО должно быть от 7 до 100 символов")
     private String fullName;
     @Min(value = 1900, message = "Год рождения должен быть больше 1900")
     @Max(value = 2024, message = "Год рождения должен быть больше 2024")
