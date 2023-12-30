@@ -30,5 +30,11 @@
     <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
         <button>Удалить данные</button>
     </form>
+
+    <br><br>
+    <hr>
+    <form th:method="GET" th:action="@{/people}">
+        <button>К списку читателей</button>
+    </form>
 </body>
 </html>
