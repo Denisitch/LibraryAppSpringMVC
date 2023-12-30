@@ -6,12 +6,12 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class Book {
     private int id;
-    @NotEmpty(message = "Title should not be empty")
+    @NotEmpty(message = "Поле 'Название книги' не должно быть пустым")
     private String title;
-    @NotEmpty(message = "Author should not be empty")
+    @NotEmpty(message = "Поле 'Автор книги' не должно быть пустым")
     private String author;
-    @Min(value = 0, message = "Year should be greater than 0")
-    @Max(value = 2024, message = "Year should be less than 2024")
+    @Min(value = 0, message = "Год выхода книги должен быть больше нуля")
+    @Max(value = 2024, message = "Год выхода книги должен быть меньше 2024")
     private int year;
 
     public Book(int id, String title, String author, int year) {

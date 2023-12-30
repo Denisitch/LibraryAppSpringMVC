@@ -7,10 +7,10 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class Person {
     private int id;
-    @NotEmpty(message = "Name should not be empty")
+    @NotEmpty(message = "Поле 'ФИО' не должно быть пустым")
     private String fullName;
-    @Min(value = 1900, message = "Year of birth should be greater than 1900")
-    @Max(value = 2024, message = "Year of birth should be less than 2024")
+    @Min(value = 1900, message = "Год рождения должен быть больше 1900")
+    @Max(value = 2024, message = "Год рождения должен быть больше 2024")
     private int yearOfBirth;
 
     public Person(int id, String fullName, int yearOfBirth) {
