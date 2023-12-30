@@ -9,12 +9,15 @@
     <br><br>
     <hr>
 
-    <div th:unless="${person}">Человек пока не взял ни одной книги</div>
+    <div th:if="${books.isEmpty()}">
+        <h2>Человек пока не взял ни одной книги</h2>
+    </div>
 
-    <div th:if="${person}">
+    <div th:unless="${books.isEmpty()}">
         <h2>Книги: </h2>
         <div th:each="book : ${books}">
-            <span th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">Book</span>
+            <a th:href="@{/books/{id}(id=${book.getId()})}"
+               th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">Book</a>
         </div>
 
     </div>
