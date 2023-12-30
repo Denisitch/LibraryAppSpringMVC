@@ -1,12 +1,14 @@
 package com.denisitch.dao;
 
 import com.denisitch.models.Book;
+import com.denisitch.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class BooksDAO {
@@ -32,6 +34,14 @@ public class BooksDAO {
         ).stream().findAny().orElse(null);
     }
 
+    public Optional<Person> getPersonOfBook(int id) {
+        return jdbcTemplate.query(
+                "SELECT p.* FROM book b JOIN person p on p.id = b.person_id WHERE b.id=?",
+                new BeanPropertyRowMapper<>(Person.class),
+                id
+        ).stream().findAny();
+    }
+
     public void save(Book book) {
         jdbcTemplate.update(
                 "INSERT INTO Book(title, author, year) VALUES (?, ?, ?)",
@@ -55,6 +65,21 @@ public class BooksDAO {
         jdbcTemplate.update(
                 "DELETE FROM Book WHERE id=?",
                 id
+        );
+    }
+
+    public void assignBook(int person_id, int book_id) {
+        jdbcTemplate.update(
+                "UPDATE Book SET person_id=? WHERE id=?",
+                person_id,
+                book_id
+        );
+    }
+
+    public void unassignBook(int book_id) {
+        jdbcTemplate.update(
+                "UPDATE Book SET person_id=NULL WHERE id=?",
+                book_id
         );
     }
 }

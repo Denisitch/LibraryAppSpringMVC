@@ -1,20 +1,26 @@
 package com.denisitch.controllers;
 
 import com.denisitch.dao.BooksDAO;
+import com.denisitch.dao.PersonDAO;
 import com.denisitch.models.Book;
+import com.denisitch.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/books")
 public class BooksController {
     private final BooksDAO booksDAO;
+    private final PersonDAO personDAO;
 
     @Autowired
-    public BooksController(BooksDAO booksDAO) {
+    public BooksController(BooksDAO booksDAO, PersonDAO personDAO) {
         this.booksDAO = booksDAO;
+        this.personDAO = personDAO;
     }
 
     @GetMapping()
@@ -25,10 +31,18 @@ public class BooksController {
 
     @GetMapping("/{id}")
     public String show(
+            @ModelAttribute("person") Person person,
             @PathVariable("id") int id,
             Model model
     ) {
         model.addAttribute("book", booksDAO.show(id));
+
+        Optional<Person> personOfBook = booksDAO.getPersonOfBook(id);
+        if (personOfBook.isPresent()) {
+            model.addAttribute("personOfBook", personOfBook.get());
+        } else {
+            model.addAttribute("people", personDAO.index());
+        }
         return "books/show";
     }
 
@@ -65,5 +79,22 @@ public class BooksController {
     public String delete(@PathVariable("id") int id) {
         booksDAO.delete(id);
         return "redirect:/books";
+    }
+
+    @PatchMapping("/{id}/assign")
+    public String assignBook(
+            @ModelAttribute("person") Person person,
+            @PathVariable("id") int id
+    ) {
+        booksDAO.assignBook(person.getId(), id);
+        return "redirect:/books/"+ id;
+    }
+
+    @PatchMapping("/{id}/unassign")
+    public String unassignBook(
+            @PathVariable("id") int id
+    ) {
+        booksDAO.unassignBook(id);
+        return "redirect:/books/"+ id;
     }
 }
