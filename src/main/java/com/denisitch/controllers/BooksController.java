@@ -4,9 +4,11 @@ import com.denisitch.dao.BooksDAO;
 import com.denisitch.dao.PersonDAO;
 import com.denisitch.models.Book;
 import com.denisitch.models.Person;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -52,9 +54,16 @@ public class BooksController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("book") Book book) {
-        booksDAO.save(book);
-        return "redirect:/books";
+    public String create(
+            @ModelAttribute("book") @Valid Book book,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "books/new";
+        } else {
+            booksDAO.save(book);
+            return "redirect:/books";
+        }
     }
 
     @GetMapping("/{id}/edit")
@@ -69,10 +78,15 @@ public class BooksController {
     @PatchMapping("/{id}")
     public String update(
             @ModelAttribute("book") Book book,
+            BindingResult bindingResult,
             @PathVariable("id") int id
     ) {
-        booksDAO.update(id, book);
-        return "redirect:/books";
+        if (bindingResult.hasErrors()) {
+            return "books/edit";
+        } else {
+            booksDAO.update(id, book);
+            return "redirect:/books";
+        }
     }
 
     @DeleteMapping("/{id}")

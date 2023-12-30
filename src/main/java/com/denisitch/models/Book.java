@@ -1,9 +1,17 @@
 package com.denisitch.models;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+
 public class Book {
     private int id;
+    @NotEmpty(message = "Поле 'Название книги' не должно быть пустым")
     private String title;
+    @NotEmpty(message = "Поле 'Автор книги' не должно быть пустым")
     private String author;
+    @Min(value = 0, message = "Год выхода книги должен быть больше нуля")
+    @Max(value = 2024, message = "Год выхода книги должен быть меньше 2024")
     private int year;
 
     public Book(int id, String title, String author, int year) {

@@ -2,9 +2,11 @@ package com.denisitch.controllers;
 
 import com.denisitch.dao.PersonDAO;
 import com.denisitch.models.Person;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -39,9 +41,16 @@ public class PeopleController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("person") Person person) {
-        personDAO.save(person);
-        return "redirect:/people";
+    public String create(
+            @ModelAttribute("person") @Valid Person person,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "people/new";
+        } else {
+            personDAO.save(person);
+            return "redirect:/people";
+        }
     }
 
     @GetMapping("/{id}/edit")
@@ -56,10 +65,15 @@ public class PeopleController {
     @PatchMapping("/{id}")
     public String update(
             @PathVariable("id") int id,
-            @ModelAttribute("person") Person person
+            @ModelAttribute("person") @Valid Person person,
+            BindingResult bindingResult
     ) {
-        personDAO.update(id, person);
-        return "redirect:/people";
+        if (bindingResult.hasErrors()) {
+            return "people/edit";
+        } else {
+            personDAO.update(id, person);
+            return "redirect:/people";
+        }
     }
 
     @DeleteMapping("/{id}")

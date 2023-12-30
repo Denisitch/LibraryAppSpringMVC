@@ -1,10 +1,16 @@
 package com.denisitch.models;
 
-import java.util.Map;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+
 
 public class Person {
     private int id;
+    @NotEmpty(message = "Поле 'ФИО' не должно быть пустым")
     private String fullName;
+    @Min(value = 1900, message = "Год рождения должен быть больше 1900")
+    @Max(value = 2024, message = "Год рождения должен быть больше 2024")
     private int yearOfBirth;
 
     public Person(int id, String fullName, int yearOfBirth) {
